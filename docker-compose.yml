@@ -4,6 +4,7 @@ services:
     ports:
       - "5432:5432"
     environment:
+      POSTGRES_DB: stats_db
       POSTGRES_USER: statsdbuser
       POSTGRES_PASSWORD: 12345
 
