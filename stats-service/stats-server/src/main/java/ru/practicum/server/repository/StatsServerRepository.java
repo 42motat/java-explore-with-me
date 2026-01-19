@@ -13,14 +13,14 @@ import java.util.Collection;
 public interface StatsServerRepository extends JpaRepository<Hit, Long> {
 
     @Query(" select h.app, h.uri, count(h.ip) " +
-           " from hits h " +
+           " from Hit h " +
            " where h.timestamp between ?1 and ?2 " +
            " group by h.app, h.uri " +
            " order by count(h.ip) desc ")
     Collection<StatsDto> findAllStats(LocalDateTime start, LocalDateTime end);
 
     @Query(" select h.app, h.uri, count(distinct h.ip) " +
-            " from hits h " +
+            " from Hit h " +
             " where h.timestamp between ?1 and ?2 " +
             " group by h.app, h.uri " +
             " order by count(h.ip) desc ")

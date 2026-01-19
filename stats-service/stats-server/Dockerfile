@@ -1,7 +1,5 @@
 FROM eclipse-temurin:21-jre-jammy
-# VOLUME /app
-# ARG JAR_FILE=target/*.jar
+ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 EXPOSE 9090
-# ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /app.jar"]
 ENTRYPOINT ["java", "-jar", "/app.jar"]
