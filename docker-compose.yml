@@ -1,8 +1,13 @@
 services:
   stats-server:
-    build: ./stats-service/stats-server
+    build:
+      context: ./stats-service/stats-server
+      dockerfile: Dockerfile
     ports:
       - "9090:9090"
+    environment:
+      SPRING_DATASOURCE_USERNAME: statsdbuser
+      SPRING_DATASOURCE_PASSWORD: 12345
 
   stats-db:
     image: postgres:16.1

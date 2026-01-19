@@ -18,8 +18,6 @@ import java.util.List;
 public class StatsController {
     private final StatsServerService statsServerService;
 
-//    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     @PostMapping("/hit")
     public HitDto create(@Valid @RequestBody HitDto hitDto) {
         return statsServerService.hit(hitDto);
