@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class StatsClient {
     private final RestClient restClient;
-    @Value("${stats-sever.url}")
+    @Value("${stats.sever.url}")
     private String serverUrl;
     @Value("${application.name}")
     private String app;
