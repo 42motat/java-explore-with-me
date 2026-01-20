@@ -9,7 +9,6 @@ import ru.practicum.dto.StatsDto;
 import ru.practicum.server.service.StatsServerService;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -24,10 +23,10 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public Collection<StatsDto> getStats(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
-                                         @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
-                                         @RequestParam(required = false) List<String> uris,
-                                         @RequestParam(required = false, defaultValue = "false") Boolean unique) {
+    public List<StatsDto> getStats(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+                                   @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
+                                   @RequestParam(required = false) List<String> uris,
+                                   @RequestParam(required = false, defaultValue = "false") Boolean unique) {
         return statsServerService.findStats(start, end, uris, unique);
     }
 }

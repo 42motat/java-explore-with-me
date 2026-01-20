@@ -10,7 +10,6 @@ import ru.practicum.server.model.Hit;
 import ru.practicum.server.repository.StatsServerRepository;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -26,10 +25,10 @@ public class StatsServerServiceImpl implements StatsServerService {
     }
 
     @Override
-    public Collection<StatsDto> findStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+    public List<StatsDto> findStats(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         if (unique != null && unique) {
-            return statsServerRepository.findAllStatsUnique(start, end);
+            return statsServerRepository.findAllStatsUnique(start, end, uris);
         }
-        return statsServerRepository.findAllStats(start, end);
+        return statsServerRepository.findAllStats(start, end, uris);
     }
 }

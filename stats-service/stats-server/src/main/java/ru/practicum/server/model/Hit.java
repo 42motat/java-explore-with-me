@@ -21,5 +21,5 @@ public class Hit {
 
     private String ip;
 
-    private LocalDateTime timestamp;
+    private LocalDateTime timestamp = LocalDateTime.now();
 }
