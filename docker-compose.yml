@@ -28,11 +28,6 @@ services:
       SPRING_DATASOURCE_USERNAME: statsdbuser
       SPRING_DATASOURCE_PASSWORD: 12345
 
-  ewm-service:
-    build: ./main-app-service
-    ports:
-      - "8080:8080"
-
   ewm-db:
     image: postgres:16.1
     container_name: emw-db
@@ -42,3 +37,17 @@ services:
       POSTGRES_DB: emw_db
       POSTGRES_USER: ewmdbuser
       POSTGRES_PASSWORD: 12345
+
+  ewm-service:
+    build:
+      context: ./main-app-service
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ewm-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ewm-db:5433/ewm_db
+      SPRING_DATASOURCE_USERNAME: ewmdbuser
+      SPRING_DATASOURCE_PASSWORD: 12345
+
