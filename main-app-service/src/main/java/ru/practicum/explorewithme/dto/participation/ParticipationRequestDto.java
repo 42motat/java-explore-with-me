@@ -18,5 +18,5 @@ public class ParticipationRequestDto {
 
     private Long requesterId;
 
-    private String Status;
+    private String status;
 }

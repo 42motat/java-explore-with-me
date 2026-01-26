@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private void validEmailCheck(String email, User userToCheck) {
-        boolean emailAlreadyExists =userRepository.findAll()
+        boolean emailAlreadyExists = userRepository.findAll()
                 .stream()
                 .filter(user -> !user.getId().equals(userToCheck.getId()))
                 .anyMatch(user -> user.getEmail().equals(email));

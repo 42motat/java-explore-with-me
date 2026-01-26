@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getById(Long id) {
-        Category category =categoryRepository.findCategoryById(id)
+        Category category = categoryRepository.findCategoryById(id)
                 .orElseThrow(() -> new NotFoundException("Указанная категория не существует"));
         return CategoryMapper.mapToCategoryDto(category);
     }

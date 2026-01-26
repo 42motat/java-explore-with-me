@@ -1,7 +1,6 @@
 package ru.practicum.explorewithme.service.event;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.data.domain.PageRequest;
 import ru.practicum.explorewithme.dto.event.EventFullDto;
 import ru.practicum.explorewithme.dto.event.EventShortDto;
 import ru.practicum.explorewithme.dto.event.ReturnedEventDto;
