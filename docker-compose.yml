@@ -37,11 +37,17 @@ services:
       POSTGRES_DB: ewm_db
       POSTGRES_USER: ewmdbuser
       POSTGRES_PASSWORD: 12345
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   ewm-service:
     build:
       context: ./main-app-service
       dockerfile: Dockerfile
+    container_name: main-app
     ports:
       - "8080:8080"
     depends_on:
