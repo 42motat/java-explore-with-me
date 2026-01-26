@@ -53,7 +53,7 @@ services:
     depends_on:
       - ewm-db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://ewm-db:5433/ewm_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ewm-db:5432/ewm_db
       SPRING_DATASOURCE_USERNAME: ewmdbuser
       SPRING_DATASOURCE_PASSWORD: 12345
 
