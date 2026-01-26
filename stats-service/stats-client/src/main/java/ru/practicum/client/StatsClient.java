@@ -1,6 +1,7 @@
 package ru.practicum.client;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
@@ -17,9 +18,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class StatsClient {
     private final RestClient restClient;
-    @Value("${stats.sever.url}")
+    @Value("${stats-sever.url}")
     private String serverUrl;
     @Value("${application.name}")
     private String app;
