@@ -1,11 +1,12 @@
 package ru.practicum.client;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.practicum.client.exception.BadRequest;
@@ -16,10 +17,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-@Service
+@Component
+@RequiredArgsConstructor
 public class StatsClient {
     private final RestClient restClient;
-    @Value("${stats.sever.url}")
+    @Value("${stats-sever.url}")
     private String serverUrl;
     @Value("${application.name}")
     private String app;
@@ -35,9 +37,10 @@ public class StatsClient {
                 .toUriString();
 
         HitDto hitDto = new HitDto();
-        hitDto.setApp(app);
-        hitDto.setUri(hitRequest.getRequestURI());
         hitDto.setIp(hitRequest.getRemoteAddr());
+        hitDto.setUri(hitRequest.getRequestURI());
+        hitDto.setTimestamp(LocalDateTime.now());
+        hitDto.setApp(app);
 
         return restClient.post()
                 .uri(url)
@@ -49,8 +52,11 @@ public class StatsClient {
 
     public ResponseEntity<List<StatsDto>> getStats(LocalDateTime start, LocalDateTime end,
                                                    List<String> uris, Boolean unique) {
-        if (start == null || end == null || start.isAfter(end)) {
+        if (start == null || end == null) {
             throw new BadRequest("Необходимо указывать корректные даты для обработки запроса");
+        }
+        if (start.isAfter(end)) {
+            throw new BadRequest("Дата начала не может быть позже даты окончания");
         }
 
         String dateFormatter = "yyyy-MM-dd HH:mm:ss";
@@ -63,7 +69,7 @@ public class StatsClient {
                 .queryParam("end", strEnd);
 
         if (uris != null && !uris.isEmpty()) {
-            uriBuilder.queryParam("uris", uris.toString());
+            uriBuilder.queryParam("uris", uris);
         }
         if (unique != null) {
             uriBuilder.queryParam("unique", unique);

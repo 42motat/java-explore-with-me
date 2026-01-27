@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: statsdbuser
       POSTGRES_PASSWORD: 12345
     healthcheck:
-      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      test: [ "CMD", "pg_isready", "-U statsdbuser", "-d stats_db" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -28,10 +28,32 @@ services:
       SPRING_DATASOURCE_USERNAME: statsdbuser
       SPRING_DATASOURCE_PASSWORD: 12345
 
-  ewm-service:
-    build: ./main-app-service
-    ports:
-      - "8080:8080"
-
   ewm-db:
     image: postgres:16.1
+    container_name: ewm-db
+    ports:
+      - "5433:5436"
+    environment:
+      POSTGRES_DB: ewm_db
+      POSTGRES_USER: ewmdbuser
+      POSTGRES_PASSWORD: 12345
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-U", "postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  ewm-service:
+    build:
+      context: ./main-app-service
+      dockerfile: Dockerfile
+    container_name: main-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ewm-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://ewm-db:5432/ewm_db
+      SPRING_DATASOURCE_USERNAME: ewmdbuser
+      SPRING_DATASOURCE_PASSWORD: 12345
+

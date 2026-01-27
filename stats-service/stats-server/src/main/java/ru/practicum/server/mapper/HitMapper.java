@@ -1,8 +1,11 @@
 package ru.practicum.server.mapper;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import ru.practicum.dto.HitDto;
 import ru.practicum.server.model.Hit;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HitMapper {
     public static HitDto mapToHitDto(Hit hit) {
         HitDto hitDto = new HitDto();
