@@ -1,7 +1,6 @@
 package ru.practicum.explorewithme.service.category;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +15,6 @@ import ru.practicum.explorewithme.repository.EventRepository;
 import java.util.Collection;
 import java.util.Optional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
@@ -62,10 +60,12 @@ public class CategoryServiceImpl implements CategoryService {
             }
             categoryCheckedById.setName(categoryDto.getName());
         }
+        categoryRepository.save(categoryCheckedById);
         return CategoryMapper.mapToCategoryDto(categoryCheckedById);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         categoryRepository.findCategoryById(id)
                 .orElseThrow(() -> new NotFoundException("Указанная категория не найдена"));

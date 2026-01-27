@@ -19,10 +19,7 @@ import ru.practicum.explorewithme.repository.CompilationRepository;
 import ru.practicum.explorewithme.repository.EventRepository;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +67,7 @@ public class CompilationServiceImpl implements CompilationService {
     public CompilationDto create(ReturnedCompilationDto compilationDto) {
         Set<Event> events = new HashSet<>();
         if (compilationDto.getEvents() != null && !compilationDto.getEvents().isEmpty()) {
-            compilationDto.getEvents().forEach(event -> events.add(getEventById(event)));
+            events = new HashSet<>(eventRepository.findAllById(compilationDto.getEvents()));
         }
         Compilation compilation = CompilationMapper.mapToCompilation(compilationDto, events);
 
@@ -90,7 +87,7 @@ public class CompilationServiceImpl implements CompilationService {
                 .orElseThrow(() -> new NotFoundException("Подборка не найдена"));
         Set<Event> events = new HashSet<>();
         if (compilationDto.getEvents() != null && !compilationDto.getEvents().isEmpty()) {
-            compilationDto.getEvents().forEach(event -> events.add(getEventById(event)));
+            events = new HashSet<>(eventRepository.findAllById(compilationDto.getEvents()));
         }
         CompilationMapper.updateCompilationFields(compilationToCheck, compilationDto, events);
 
@@ -109,12 +106,6 @@ public class CompilationServiceImpl implements CompilationService {
         compilationRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Подборка не найдена"));
         compilationRepository.deleteById(id);
-    }
-
-    private Event getEventById(Long id) {
-        Event event = eventRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Событие не найдено"));
-        return event;
     }
 
     private Long getEventViews(Long id) {
