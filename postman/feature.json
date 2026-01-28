@@ -88,22 +88,17 @@
               }
             ],
             "url": {
-              "raw": "{{baseUrl}}/admin/comments/users/{{userId}}",
+              "raw": "http://localhost:8080/admin/comments/users/{{userId}}",
+              "protocol": "http",
               "host": [
-                "{{baseUrl}}"
+                "localhost"
               ],
+              "port": "8080",
               "path": [
                 "admin",
                 "comments",
                 "users",
                 "{{userId}}"
-              ],
-              "query": [
-                {
-                  "key": "sort",
-                  "value": "",
-                  "disabled": true
-                }
               ]
             }
           },
@@ -2183,7 +2178,7 @@
   "variable": [
     {
       "key": "baseUrl",
-      "value": ""
+      "value": "http://localhost:8080"
     },
     {
       "key": "userId",
