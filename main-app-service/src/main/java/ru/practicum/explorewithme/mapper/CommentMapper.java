@@ -1,5 +1,7 @@
 package ru.practicum.explorewithme.mapper;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import ru.practicum.explorewithme.dto.comment.CommentDto;
 import ru.practicum.explorewithme.dto.comment.UpdatedCommentDto;
 import ru.practicum.explorewithme.exception.BadRequest;
@@ -9,6 +11,7 @@ import ru.practicum.explorewithme.model.User;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CommentMapper {
     public static Comment mapToComment(CommentDto commentDto, User author, Event event) {
         Comment comment = new Comment();
